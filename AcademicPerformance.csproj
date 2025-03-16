@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{14455C05-DCB0-4F07-83AE-E635A4C74A29}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AcademicPerformance</RootNamespace>
+    <AssemblyName>AcademicPerformance</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Classes\DataSqlGateways\SqlDataAccess.cs" />
+    <Compile Include="Classes\Const.cs" />
+    <Compile Include="Classes\DataAdapters\RoleAdapter.cs" />
+    <Compile Include="Classes\DataModels\RoleModel.cs" />
+    <Compile Include="Classes\DataAdapters\StudentAdapter.cs" />
+    <Compile Include="Classes\DataAdapters\TeacherAdapter.cs" />
+    <Compile Include="Classes\DataAdapters\EvaluationAdapter.cs" />
+    <Compile Include="Classes\DataAdapters\DisciplineAdapter.cs" />
+    <Compile Include="Classes\DataAdapters\JournalAdapter.cs" />
+    <Compile Include="Classes\DataModels\JournalModel.cs" />
+    <Compile Include="Classes\DataAdapters\UserAdapter.cs" />
+    <Compile Include="Classes\DataModels\UserModel.cs" />
+    <Compile Include="Classes\DataSqlGateways\ConstSqlConfig.cs" />
+    <Compile Include="Classes\DataModels\DisciplineModel.cs" />
+    <Compile Include="Classes\DataModels\EvaluationModel.cs" />
+    <Compile Include="Classes\DataModels\StudentModel.cs" />
+    <Compile Include="Classes\DataModels\TeacherModel.cs" />
+    <Compile Include="Classes\DataSqlGateways\SqlDataAccess.DisciplineAccess.cs" />
+    <Compile Include="Classes\DataSqlGateways\SqlDataAccess.EvaluationAccess.cs" />
+    <Compile Include="Classes\DataSqlGateways\SqlDataAccess.JournalAccess.cs" />
+    <Compile Include="Classes\DataSqlGateways\SqlDataAccess.RoleAccess.cs" />
+    <Compile Include="Classes\DataSqlGateways\SqlDataAccess.StudentAccess.cs" />
+    <Compile Include="Classes\DataSqlGateways\SqlDataAccess.TeacherAccess.cs" />
+    <Compile Include="Classes\DataSqlGateways\SqlDataAccess.UserAccess.cs" />
+    <Compile Include="Classes\RelayCommand.cs" />
+    <Compile Include="ViewModels\VMProfileTeacher.cs" />
+    <Compile Include="ViewModels\VMAddJournal.cs" />
+    <Compile Include="ViewModels\VMProfileStudent.cs" />
+    <Compile Include="ViewModels\VMJournal.cs" />
+    <Compile Include="ViewModels\VMRegistration.cs" />
+    <Compile Include="ViewModels\VMAuthorization.cs" />
+    <Compile Include="ViewModels\VMRoleEdit.cs" />
+    <Compile Include="Views\WinAdd.xaml.cs">
+      <DependentUpon>WinAdd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinAddStudent.xaml.cs">
+      <DependentUpon>WinAddStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinAddTeacher.xaml.cs">
+      <DependentUpon>WinAddTeacher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinAdmin.xaml.cs">
+      <DependentUpon>WinAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinDirector.xaml.cs">
+      <DependentUpon>WinDirector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinAdminJournal.xaml.cs">
+      <DependentUpon>WinAdminJournal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinAddDiscipline.xaml.cs">
+      <DependentUpon>WinAddDiscipline.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinRoleEdit.xaml.cs">
+      <DependentUpon>WinRoleEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinProfileTeacher.xaml.cs">
+      <DependentUpon>WinProfileTeacher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinProfileStudent.xaml.cs">
+      <DependentUpon>WinProfileStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinRegistration.xaml.cs">
+      <DependentUpon>WinRegistration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinStudentJournal.xaml.cs">
+      <DependentUpon>WinStudentJournal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinTeacherJournal.xaml.cs">
+      <DependentUpon>WinTeacherJournal.xaml</DependentUpon>
+    </Compile>
+    <Page Include="ResourcesFolder\ResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinAuthorization.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\WinAuthorization.xaml.cs">
+      <DependentUpon>WinAuthorization.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\WinAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinAddStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinAddTeacher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinDirector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinAdminJournal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinAddDiscipline.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinRoleEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinProfileTeacher.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WinProfileStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinRegistration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinStudentJournal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WinTeacherJournal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ResourcesFolder\Icon.png" />
+    <Resource Include="ResourcesFolder\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBSqlScript\AcademicPerfomanceUPD.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
