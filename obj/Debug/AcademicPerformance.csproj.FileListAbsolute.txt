@@ -42,3 +42,14 @@ C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\D
 C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\Debug\AcademicPerformance.csproj.CoreCompileInputs.cache
 C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\Debug\AcademicPerformance.exe
 C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\Debug\AcademicPerformance.pdb
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\Debug\Views\WinClassReport.baml
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\Debug\Views\WinClassReport.g.cs
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\Debug\Views\WinAgeChartReport.baml
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\Debug\Views\WinAgeChartReport.g.cs
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\bin\Debug\LiveCharts.dll
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\bin\Debug\LiveCharts.pdb
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\bin\Debug\LiveCharts.xml
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\User\RiderProjects\SchoolJournal-.Net-MVVM111\AcademicPerformance\obj\Debug\Academic.7A3ED67E.Up2Date

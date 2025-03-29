@@ -3,20 +3,18 @@ using AcademicPerformance.ViewModels;
 
 namespace AcademicPerformance.Views
 {
-    /// <summary>
-    /// Interaction logic for WinTeacher.xaml
-    /// </summary>
     public partial class WinTeacher
     {
-
         public delegate void Refresh();
         public event Refresh RefreshEvent;
 
+        private VMJournal _viewModel;
+
         private void RefreshView()
         {
-            var teacherJournal = new VMJournal();
+            _viewModel = new VMJournal();
             this.DataContext = null;
-            this.DataContext = teacherJournal;
+            this.DataContext = _viewModel;
         }
 
         public WinTeacher()
@@ -30,7 +28,6 @@ namespace AcademicPerformance.Views
             tbSearch.Focus();
         }
 
-        
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show(
@@ -42,7 +39,6 @@ namespace AcademicPerformance.Views
                 System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
             }
         }
-        
 
         private void Add_OnClick(object sender, RoutedEventArgs e)
         {
@@ -55,7 +51,7 @@ namespace AcademicPerformance.Views
         private void miProfile_Click(object sender, RoutedEventArgs e)
         {
             RefreshEvent += new Refresh(RefreshView);
-            WinProfileTeacher winProfileTeacher = new WinProfileTeacher {UpdateActor = RefreshEvent};
+            WinProfileTeacher winProfileTeacher = new WinProfileTeacher { UpdateActor = RefreshEvent };
             winProfileTeacher.Show();
         }
 
@@ -70,7 +66,33 @@ namespace AcademicPerformance.Views
                 System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
             }
         }
+
+        private void ReportByClass_Click(object sender, RoutedEventArgs e)
+        {
+            var classFilter = tbClassFilter.Text.Trim();
+            if (string.IsNullOrEmpty(classFilter))
+            {
+                MessageBox.Show("Введите название класса для отчета.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var reportWindow = new WinClassReport(classFilter);
+            reportWindow.Owner = this;
+            reportWindow.ShowDialog();
+        }
+
+        private void ReportAgeChart_Click(object sender, RoutedEventArgs e)
+        {
+            var classFilter = tbClassFilter.Text.Trim();
+            if (string.IsNullOrEmpty(classFilter))
+            {
+                MessageBox.Show("Введите название класса для диаграммы.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var chartWindow = new WinAgeChartReport(classFilter);
+            chartWindow.Owner = this;
+            chartWindow.ShowDialog();
+        }
     }
 }
-
-

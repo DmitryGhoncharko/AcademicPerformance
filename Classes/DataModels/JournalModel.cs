@@ -4,7 +4,17 @@ namespace AcademicPerformance.Classes.DataModels
 {
     public class JournalModel : INotifyPropertyChanged
     {
-       
+        private string classStudent;
+        public string ClassStudent
+        {
+            get => classStudent;
+            set
+            {
+                classStudent = value;
+                OnPropertyChanged(nameof(ClassStudent));
+            }
+        }
+        
         private int idStudent;
         public int IdStudent
         {

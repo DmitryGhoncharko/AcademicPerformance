@@ -48,6 +48,13 @@ namespace AcademicPerformance.Views
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 tbStudNumberPhone.Focus();
+            }else if (string.IsNullOrEmpty(tbStudClass.Text))
+            {
+                MessageBox.Show("Введите класс студента",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                tbStudClass.Focus();
             }
             else if (string.IsNullOrEmpty(tbStudLogin.Text))
             {

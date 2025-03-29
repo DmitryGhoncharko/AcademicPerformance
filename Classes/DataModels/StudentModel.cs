@@ -7,6 +7,12 @@ namespace AcademicPerformance.Classes.DataModels
     {
 
         private int idUser;
+        private string classStudent;
+        public string ClassStudent
+        {
+            get { return classStudent; }
+            set { classStudent = value; OnPropertyChanged(nameof(ClassStudent)); }
+        }
         public int IdUser
         {
             get { return idUser; }

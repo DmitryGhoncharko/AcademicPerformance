@@ -18,53 +18,47 @@ namespace AcademicPerformance.Classes.DataSqlGateways
             using (var sqlConnection = new SqlConnection(ConstSqlConfig.DefaultCnnVal()))
             {
                 const string sqlQuery = @"SELECT [IdJournal], 
-                    [LastNameStudent], [FirstNameStudent], [MiddleNameStudent],
+                    [LastNameStudent], [FirstNameStudent], [MiddleNameStudent], [Student].[Class],
                     [NameEvaluation], [NumberEvaluation],
                     [LastNameTeacher], [FirstNameTeacher], [MiddleNameTeacher],
                     [NameDiscipline],
                     [Journal].[IdStudent], [Journal].[IdTeacher],
                     [Journal].[IdDiscipline], [Journal].[IdEvaluation]
                     FROM [dbo].[Journal]
-                    inner join [dbo].Student on Student.IdStudent = Journal.IdStudent
-                    inner join [dbo].Teacher on Teacher.IdTeacher = Journal.IdTeacher
-                    inner join [dbo].Evaluation on Evaluation.IdEvaluation = Journal.IdEvaluation
-                    inner join [dbo].Discipline on Discipline.IdDiscipline = Journal.IdDiscipline
-                    WHERE Student.IdUser = @IdUser or Teacher.IdUser=@IdUser";
+                    INNER JOIN [dbo].[Student] ON Student.IdStudent = Journal.IdStudent
+                    INNER JOIN [dbo].[Teacher] ON Teacher.IdTeacher = Journal.IdTeacher
+                    INNER JOIN [dbo].[Evaluation] ON Evaluation.IdEvaluation = Journal.IdEvaluation
+                    INNER JOIN [dbo].[Discipline] ON Discipline.IdDiscipline = Journal.IdDiscipline
+                    WHERE Student.IdUser = @IdUser OR Teacher.IdUser = @IdUser";
 
-                SqlDataAdapter dataAdapter;
-                using (var sqlCommand = new SqlCommand(sqlQuery,
-                    sqlConnection))
+                using (var sqlCommand = new SqlCommand(sqlQuery, sqlConnection))
                 {
-                    sqlCommand.Parameters.AddWithValue("IdUser",
-                        App.IdUser);
-                    dataAdapter = new SqlDataAdapter(sqlCommand);
+                    sqlCommand.Parameters.AddWithValue("IdUser", App.IdUser);
+                    var dataAdapter = new SqlDataAdapter(sqlCommand);
+                    dataAdapter.Fill(dataTable);
                 }
 
-                dataAdapter.Fill(dataTable);
-
                 var journalList = (from DataRow dataRow in dataTable.Rows
-                    select new JournalModel()
+                    select new JournalModel
                     {
                         IdJournal = Convert.ToInt32(dataRow["IdJournal"]),
                         LastNameStudent = dataRow["LastNameStudent"].ToString(),
-                        FirstNameTeacher = dataRow["FirstNameTeacher"].ToString(),
-                        MiddleNameTeacher = dataRow["MiddleNameTeacher"].ToString(),
-                        LastNameTeacher = dataRow["LastNameTeacher"].ToString(),
                         FirstNameStudent = dataRow["FirstNameStudent"].ToString(),
                         MiddleNameStudent = dataRow["MiddleNameStudent"].ToString(),
-                        NameDiscipline = dataRow["NameDiscipline"]
-                            .ToString(),
-                        NameEvaluation = dataRow["NameEvaluation"]
-                            .ToString(),
+                        ClassStudent = dataRow["Class"].ToString(),
+                        NameEvaluation = dataRow["NameEvaluation"].ToString(),
                         NumberEvaluation = Convert.ToInt32(dataRow["NumberEvaluation"]),
+                        LastNameTeacher = dataRow["LastNameTeacher"].ToString(),
+                        FirstNameTeacher = dataRow["FirstNameTeacher"].ToString(),
+                        MiddleNameTeacher = dataRow["MiddleNameTeacher"].ToString(),
+                        NameDiscipline = dataRow["NameDiscipline"].ToString(),
                         IdStudent = Convert.ToInt32(dataRow["IdStudent"]),
                         IdTeacher = Convert.ToInt32(dataRow["IdTeacher"]),
                         IdDiscipline = Convert.ToInt32(dataRow["IdDiscipline"]),
                         IdEvaluation = Convert.ToInt32(dataRow["IdEvaluation"]),
                     }).ToList();
 
-                var output = journalList;
-                return output;
+                return journalList;
             }
         }
 
@@ -74,48 +68,45 @@ namespace AcademicPerformance.Classes.DataSqlGateways
             using (var sqlConnection = new SqlConnection(ConstSqlConfig.DefaultCnnVal()))
             {
                 const string sqlQuery = @"SELECT [IdJournal], 
-                    [LastNameStudent], [FirstNameStudent], [MiddleNameStudent],
+                    [LastNameStudent], [FirstNameStudent], [MiddleNameStudent], [Student].[Class],
                     [NameEvaluation], [NumberEvaluation],
                     [LastNameTeacher], [FirstNameTeacher], [MiddleNameTeacher],
                     [NameDiscipline],
                     [Journal].[IdStudent], [Journal].[IdTeacher],
                     [Journal].[IdDiscipline], [Journal].[IdEvaluation]
                     FROM [dbo].[Journal]
-                    inner join [dbo].Student on Student.IdStudent = Journal.IdStudent
-                    inner join [dbo].Teacher on Teacher.IdTeacher = Journal.IdTeacher
-                    inner join [dbo].Evaluation on Evaluation.IdEvaluation = Journal.IdEvaluation
-                    inner join [dbo].Discipline on Discipline.IdDiscipline = Journal.IdDiscipline";
+                    INNER JOIN [dbo].[Student] ON Student.IdStudent = Journal.IdStudent
+                    INNER JOIN [dbo].[Teacher] ON Teacher.IdTeacher = Journal.IdTeacher
+                    INNER JOIN [dbo].[Evaluation] ON Evaluation.IdEvaluation = Journal.IdEvaluation
+                    INNER JOIN [dbo].[Discipline] ON Discipline.IdDiscipline = Journal.IdDiscipline";
 
-                SqlDataAdapter dataAdapter;
-                using (var sqlCommand = new SqlCommand(sqlQuery,
-                    sqlConnection))
+                using (var sqlCommand = new SqlCommand(sqlQuery, sqlConnection))
                 {
-                    dataAdapter = new SqlDataAdapter(sqlCommand);
+                    var dataAdapter = new SqlDataAdapter(sqlCommand);
+                    dataAdapter.Fill(dataTable);
                 }
 
-                dataAdapter.Fill(dataTable);
-
                 var journalList = (from DataRow dataRow in dataTable.Rows
-                    select new JournalModel()
+                    select new JournalModel
                     {
                         IdJournal = Convert.ToInt32(dataRow["IdJournal"]),
                         LastNameStudent = dataRow["LastNameStudent"].ToString(),
-                        FirstNameTeacher = dataRow["FirstNameTeacher"].ToString(),
-                        MiddleNameTeacher = dataRow["MiddleNameTeacher"].ToString(),
-                        LastNameTeacher = dataRow["LastNameTeacher"].ToString(),
                         FirstNameStudent = dataRow["FirstNameStudent"].ToString(),
                         MiddleNameStudent = dataRow["MiddleNameStudent"].ToString(),
-                        NameDiscipline = dataRow["NameDiscipline"].ToString(),
+                        ClassStudent = dataRow["Class"].ToString(),
                         NameEvaluation = dataRow["NameEvaluation"].ToString(),
                         NumberEvaluation = Convert.ToInt32(dataRow["NumberEvaluation"]),
+                        LastNameTeacher = dataRow["LastNameTeacher"].ToString(),
+                        FirstNameTeacher = dataRow["FirstNameTeacher"].ToString(),
+                        MiddleNameTeacher = dataRow["MiddleNameTeacher"].ToString(),
+                        NameDiscipline = dataRow["NameDiscipline"].ToString(),
                         IdStudent = Convert.ToInt32(dataRow["IdStudent"]),
                         IdTeacher = Convert.ToInt32(dataRow["IdTeacher"]),
                         IdDiscipline = Convert.ToInt32(dataRow["IdDiscipline"]),
                         IdEvaluation = Convert.ToInt32(dataRow["IdEvaluation"]),
                     }).ToList();
 
-                var output = journalList;
-                return output;
+                return journalList;
             }
         }
 
@@ -131,12 +122,10 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                         FROM [dbo].[Journal]
                         WHERE [Journal].IdJournal = @IdJournal";
                     SqlDataReader reader;
-                    using (var sqlCommand = new SqlCommand(sqlQuery,
-                        sqlConnection))
+                    using (var sqlCommand = new SqlCommand(sqlQuery, sqlConnection))
                     {
                         sqlConnection.Open();
-                        sqlCommand.Parameters.AddWithValue("IdJournal",
-                            idJournal);
+                        sqlCommand.Parameters.AddWithValue("IdJournal", idJournal);
                         reader = sqlCommand.ExecuteReader();
                     }
 
@@ -160,10 +149,7 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message,
-                        "Ошибка",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 finally
                 {
@@ -183,22 +169,17 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 {
                     const string sqlQuery = 
                         @"INSERT INTO dbo.[Journal] 
-                        (IdStudent, IdTeacher,IdDiscipline, IdEvaluation) 
-                        VALUES (@IdStudent,@IdTeacher, @IdDiscipline, @IdEvaluation)";
+                        (IdStudent, IdTeacher, IdDiscipline, IdEvaluation) 
+                        VALUES (@IdStudent, @IdTeacher, @IdDiscipline, @IdEvaluation)";
                     int noOfRowsAffected;
-                    using (var sqlCommand = new SqlCommand(sqlQuery,
-                        sqlConnection))
+                    using (var sqlCommand = new SqlCommand(sqlQuery, sqlConnection))
                     {
                         if (journalModel != null)
                         {
-                            sqlCommand.Parameters.AddWithValue("IdStudent",
-                                journalModel.IdStudent);
-                            sqlCommand.Parameters.AddWithValue("IdTeacher",
-                                journalModel.IdTeacher);
-                            sqlCommand.Parameters.AddWithValue("IdDiscipline",
-                                journalModel.IdDiscipline);
-                            sqlCommand.Parameters.AddWithValue("IdEvaluation",
-                                journalModel.IdEvaluation);
+                            sqlCommand.Parameters.AddWithValue("IdStudent", journalModel.IdStudent);
+                            sqlCommand.Parameters.AddWithValue("IdTeacher", journalModel.IdTeacher);
+                            sqlCommand.Parameters.AddWithValue("IdDiscipline", journalModel.IdDiscipline);
+                            sqlCommand.Parameters.AddWithValue("IdEvaluation", journalModel.IdEvaluation);
                         }
 
                         sqlConnection.Open();
@@ -209,10 +190,7 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message,
-                        "Ошибка",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 finally
                 {
@@ -233,24 +211,18 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                     const string sqlQuery = 
                         @"UPDATE dbo.[Journal] 
                         SET IdTeacher=@IdTeacher, IdStudent=@IdStudent, 
-                        IdDiscipline=@IdDiscipline,IdEvaluation=@IdEvaluation
+                        IdDiscipline=@IdDiscipline, IdEvaluation=@IdEvaluation
                         WHERE IdJournal=@IdJournal";
                     int noOfRowsAffected;
-                    using (var sqlCommand = new SqlCommand(sqlQuery,
-                        sqlConnection))
+                    using (var sqlCommand = new SqlCommand(sqlQuery, sqlConnection))
                     {
                         if (journalModel != null)
                         {
-                            sqlCommand.Parameters.AddWithValue("IdJournal",
-                                journalModel.IdJournal);
-                            sqlCommand.Parameters.AddWithValue("IdTeacher",
-                                journalModel.IdTeacher);
-                            sqlCommand.Parameters.AddWithValue("IdStudent",
-                                journalModel.IdStudent);
-                            sqlCommand.Parameters.AddWithValue("IdDiscipline",
-                                journalModel.IdDiscipline);
-                            sqlCommand.Parameters.AddWithValue("IdEvaluation",
-                                journalModel.IdEvaluation);
+                            sqlCommand.Parameters.AddWithValue("IdJournal", journalModel.IdJournal);
+                            sqlCommand.Parameters.AddWithValue("IdTeacher", journalModel.IdTeacher);
+                            sqlCommand.Parameters.AddWithValue("IdStudent", journalModel.IdStudent);
+                            sqlCommand.Parameters.AddWithValue("IdDiscipline", journalModel.IdDiscipline);
+                            sqlCommand.Parameters.AddWithValue("IdEvaluation", journalModel.IdEvaluation);
                         }
 
                         sqlConnection.Open();
@@ -261,10 +233,7 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message,
-                        "Ошибка",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 finally
                 {
@@ -283,13 +252,11 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 try
                 {
                     const string sqlQuery = 
-                        @"DELETE FROM  dbo.[Journal] WHERE idJournal=@idJournal";
+                        @"DELETE FROM dbo.[Journal] WHERE IdJournal=@IdJournal";
                     int noOfRowsAffected;
-                    using (var sqlCommand = new SqlCommand(sqlQuery,
-                        sqlConnection))
+                    using (var sqlCommand = new SqlCommand(sqlQuery, sqlConnection))
                     {
-                        sqlCommand.Parameters.AddWithValue("idJournal",
-                            idJournal);
+                        sqlCommand.Parameters.AddWithValue("IdJournal", idJournal);
                         sqlConnection.Open();
                         noOfRowsAffected = sqlCommand.ExecuteNonQuery();
                     }
@@ -298,10 +265,7 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message,
-                        "Ошибка",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 finally
                 {

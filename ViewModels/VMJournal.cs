@@ -7,14 +7,25 @@ using AcademicPerformance.Classes.DataAdapters;
 using AcademicPerformance.Classes.DataModels;
 
 namespace AcademicPerformance.ViewModels
-
 {
     public class VMJournal : INotifyPropertyChanged
     {
         private string searchText;
+        private bool sortByClass;
+
+        public bool SortByClass
+        {
+            get => sortByClass;
+            set
+            {
+                sortByClass = value;
+                Filter();
+                OnPropertyChanged(nameof(SortByClass));
+            }
+        }
+
         public VMJournal()
         {
-            
             switch (App.RoleUser)
             {
                 case Const.RoleValue.Teacher:
@@ -41,7 +52,7 @@ namespace AcademicPerformance.ViewModels
                     JournalAdapter = new JournalAdapter();
                     DisciplineAdapter = new DisciplineAdapter();
                     EvaluationAdapter = new EvaluationAdapter();
-                    StudentAdapter= new StudentAdapter();;
+                    StudentAdapter= new StudentAdapter();
                     TeacherAdapter= new TeacherAdapter();
                     LoadData();
                     Filter();
@@ -56,7 +67,6 @@ namespace AcademicPerformance.ViewModels
         public StudentAdapter StudentAdapter { get; }
         public string Message { get; set; }
 
-
         private ObservableCollection<JournalModel> filteredJournalList;
         public ObservableCollection<JournalModel> FilteredJournalList
         {
@@ -67,7 +77,6 @@ namespace AcademicPerformance.ViewModels
                 OnPropertyChanged(nameof(FilteredJournalList));
             }
         }
-
 
         private ObservableCollection<JournalModel> journalList;
         public ObservableCollection<JournalModel> JournalList
@@ -81,14 +90,9 @@ namespace AcademicPerformance.ViewModels
         }
 
         public ObservableCollection<EvaluationModel> EvaluationList { get; set; }
-
         public ObservableCollection<StudentModel> StudentList { get; set; }
-
         public ObservableCollection<TeacherModel> TeacherList { get; set; }
-
-
         public ObservableCollection<DisciplineModel> DisciplineList { get; set; }
-
 
         public string SearchText
         {
@@ -112,7 +116,6 @@ namespace AcademicPerformance.ViewModels
             }
         }
 
-
         public RelayCommand SaveCommand { get; }
 
         private EvaluationModel selectedNumber;
@@ -122,10 +125,7 @@ namespace AcademicPerformance.ViewModels
             set
             {
                 selectedNumber = value;
-                if (EvaluationList == null ||
-                    selectedNumber == null ||
-                    SelectedRow == null ||
-                    SelectedRow.NumberEvaluation == selectedNumber.NumberEvaluation)
+                if (EvaluationList == null || selectedNumber == null || SelectedRow == null || SelectedRow.NumberEvaluation == selectedNumber.NumberEvaluation)
                     return;
                 SelectedRow.NameEvaluation = selectedNumber.NameEvaluation;
                 SelectedRow.IdEvaluation = selectedNumber.IdEvaluation;
@@ -139,10 +139,7 @@ namespace AcademicPerformance.ViewModels
             set
             {
                 selectedDiscipline = value;
-                if (DisciplineList == null ||
-                    selectedDiscipline == null ||
-                    SelectedRow == null ||
-                    SelectedRow.NameDiscipline == selectedDiscipline.NameDiscipline)
+                if (DisciplineList == null || selectedDiscipline == null || SelectedRow == null || SelectedRow.NameDiscipline == selectedDiscipline.NameDiscipline)
                     return;
                 SelectedRow.NameDiscipline = selectedDiscipline.NameDiscipline;
                 SelectedRow.IdDiscipline = selectedDiscipline.IdDiscipline;
@@ -155,10 +152,7 @@ namespace AcademicPerformance.ViewModels
             set
             {
                 selectedTeacher = value;
-                if (TeacherList == null ||
-                    selectedTeacher == null ||
-                    SelectedRow == null ||
-                    SelectedRow.FIOTeacher == selectedTeacher.FullName)
+                if (TeacherList == null || selectedTeacher == null || SelectedRow == null || SelectedRow.FIOTeacher == selectedTeacher.FullName)
                     return;
                 SelectedRow.FIOTeacher = selectedTeacher.FullName;
                 SelectedRow.IdTeacher = selectedTeacher.IdTeacher;
@@ -171,16 +165,12 @@ namespace AcademicPerformance.ViewModels
             set
             {
                 selectedStudent = value;
-                if (StudentList == null ||
-                    selectedStudent == null ||
-                    SelectedRow == null ||
-                    SelectedRow.FIOTeacher == selectedStudent.FullName)
+                if (StudentList == null || selectedStudent == null || SelectedRow == null || SelectedRow.FIOStudent == selectedStudent.FullName)
                     return;
                 SelectedRow.FIOStudent = selectedStudent.FullName;
                 SelectedRow.IdStudent = selectedStudent.IdStudent;
             }
         }
-
 
         public RelayCommand DeleteCommand { get; }
 
@@ -193,20 +183,24 @@ namespace AcademicPerformance.ViewModels
 
         private void Filter()
         {
-            FilteredJournalList =
-                new ObservableCollection<JournalModel>(
-                    from item
-                        in JournalList
-                    where item.NameEvaluation.ToUpper().Contains(SearchText.ToUpper()) ||
-                          item.FIOTeacher.ToUpper().Contains(SearchText.ToUpper()) ||
-                          item.FIOStudent.ToUpper().Contains(SearchText.ToUpper()) ||
-                          item.NameDiscipline.ToUpper().Contains(SearchText.ToUpper()) ||
-                          item.NumberEvaluation.ToString().ToUpper().Contains(SearchText.ToUpper()) ||
-                          item.IdJournal.ToString().ToUpper().Contains(SearchText.ToUpper())
-                    select item);
-            if (FilteredJournalList.Any()) SelectedRow = FilteredJournalList[0];
-        }
+            var query = JournalList.Where(item =>
+                item.NameEvaluation.ToUpper().Contains(SearchText.ToUpper()) ||
+                item.FIOTeacher.ToUpper().Contains(SearchText.ToUpper()) ||
+                item.FIOStudent.ToUpper().Contains(SearchText.ToUpper()) ||
+                item.NameDiscipline.ToUpper().Contains(SearchText.ToUpper()) ||
+                item.NumberEvaluation.ToString().ToUpper().Contains(SearchText.ToUpper()) ||
+                item.IdJournal.ToString().ToUpper().Contains(SearchText.ToUpper()));
 
+            if (SortByClass)
+            {
+                query = query.OrderBy(item => item.ClassStudent);
+            }
+
+            FilteredJournalList = new ObservableCollection<JournalModel>(query);
+
+            if (FilteredJournalList.Any())
+                SelectedRow = FilteredJournalList[0];
+        }
 
         private void LoadData()
         {
@@ -229,7 +223,6 @@ namespace AcademicPerformance.ViewModels
                 case Const.RoleValue.Admin:
                 case Const.RoleValue.Director:
                 case Const.RoleValue.Manager:
-
                     DisciplineList = new ObservableCollection<DisciplineModel>(DisciplineAdapter.GetAll());
                     EvaluationList = new ObservableCollection<EvaluationModel>(EvaluationAdapter.GetAllEvaluation());
                     JournalList = new ObservableCollection<JournalModel>(JournalAdapter.GetAllJournalFull());
@@ -238,10 +231,8 @@ namespace AcademicPerformance.ViewModels
                     SelectedRow = new JournalModel();
                     SearchText = "";
                     break;
-
             }
         }
-
 
         public void Save(object param)
         {
@@ -250,9 +241,7 @@ namespace AcademicPerformance.ViewModels
                 if (!JournalAdapter.SetJournal(item))
                     isAllSaved = false;
 
-            Message = isAllSaved
-                ? "Изменения сохранены" 
-                : "При сохранении произошла ошибка";
+            Message = isAllSaved ? "Изменения сохранены" : "При сохранении произошла ошибка";
             MessageBox.Show(Message);
             LoadData();
         }
@@ -260,9 +249,7 @@ namespace AcademicPerformance.ViewModels
         public void Delete(object param)
         {
             var isDeleted = JournalAdapter.DeleteJournalById(SelectedRow.IdJournal);
-            Message = isDeleted
-                ? "Удалено" 
-                : "При удалении произошла ошибка";
+            Message = isDeleted ? "Удалено" : "При удалении произошла ошибка";
             MessageBox.Show(Message);
             LoadData();
         }

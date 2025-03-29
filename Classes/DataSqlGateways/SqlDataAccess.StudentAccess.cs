@@ -18,10 +18,10 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 try
                 {
                     const string sqlQuery = 
-                        @"SELECT IdStudent, LastNameStudent, 
-                        FirstNameStudent,MiddleNameStudent,
-                        DateOfBirthStudent,NumberPhoneStudent,IdUser
-                        FROM [dbo].[Student]";
+                        @"SELECT IdStudent, LastNameStudent, FirstNameStudent, MiddleNameStudent,
+       DateOfBirthStudent, NumberPhoneStudent, IdUser, Class
+FROM [dbo].[Student]
+";
                     SqlDataReader reader;
                     using (var sqlCommand = new SqlCommand(sqlQuery,
                         sqlConnection))
@@ -43,7 +43,9 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                                 MiddleNameStudent = reader.GetString(3),
                                 DateOfBirthStudent = reader.GetDateTime(4),
                                 NumberPhoneStudent = reader.GetString(5),
-                                IdUser = reader.GetInt32(6)
+                                IdUser = reader.GetInt32(6),
+                                ClassStudent = reader.IsDBNull(7) ? null : reader.GetString(7)
+
                             };
                             items.Add(u);
                         }
@@ -75,10 +77,10 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 try
                 {
                     const string sqlQuery = 
-                        @"SELECT IdUser, IdStudent, LastNameStudent, 
-                        FirstNameStudent, MiddleNameStudent, DateOfBirthStudent, NumberPhoneStudent
-                        FROM [dbo].[Student]
-                        WHERE [Student].IdUser = @IdUser";
+                        @"SELECT IdUser, IdStudent, LastNameStudent, FirstNameStudent, MiddleNameStudent,
+      DateOfBirthStudent, NumberPhoneStudent, Class
+      FROM [dbo].[Student]
+      WHERE IdUser = @IdUser";
                     SqlDataReader reader;
                     using (var sqlCommand = new SqlCommand(sqlQuery,
                         sqlConnection))
@@ -100,7 +102,9 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                             FirstNameStudent = (string) reader["FirstNameStudent"],
                             MiddleNameStudent = (string) reader["MiddleNameStudent"],
                             DateOfBirthStudent = (DateTime) reader["DateOfBirthStudent"],
-                            NumberPhoneStudent = (string) reader["NumberPhoneStudent"]
+                            NumberPhoneStudent = (string) reader["NumberPhoneStudent"],
+                            ClassStudent = reader.IsDBNull(7) ? null : (string)reader["Class"]
+
                         };
                         items.Add(u);
                     }
@@ -133,14 +137,16 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 {
                     const string sqlQuery = 
                         @"INSERT INTO dbo.[Student] 
-                        (IdUser,LastNameStudent, FirstNameStudent, MiddleNameStudent,
-                        DateOfBirthStudent, NumberPhoneStudent)
-                        VALUES (@IdUser, @LastNameStudent, @FirstNameStudent, @MiddleNameStudent,
-                        @DateOfBirthStudent, @NumberPhoneStudent)";
+(IdUser, LastNameStudent, FirstNameStudent, MiddleNameStudent,
+ DateOfBirthStudent, NumberPhoneStudent, Class)
+VALUES (@IdUser, @LastNameStudent, @FirstNameStudent, @MiddleNameStudent,
+        @DateOfBirthStudent, @NumberPhoneStudent, @Class)
+";
                     int noOfRowsAffected;
                     using (var sqlCommand = new SqlCommand(sqlQuery,
                         sqlConnection))
                     {
+                       
                         if (studentModel != null)
                         {
                             sqlCommand.Parameters.AddWithValue("IdUser",
@@ -155,6 +161,7 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                                 studentModel.DateOfBirthStudent);
                             sqlCommand.Parameters.AddWithValue("NumberPhoneStudent",
                                 studentModel.NumberPhoneStudent);
+                            sqlCommand.Parameters.AddWithValue("Class", studentModel.ClassStudent ?? (object)DBNull.Value);
                         }
 
                         sqlConnection.Open();
@@ -188,10 +195,11 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                 {
                     const string sqlQuery = 
                         @"UPDATE dbo.[Student]
-                        SET IdUser=@IdUser, LastNameStudent=@LastNameStudent, 
-                        FirstNameStudent=@FirstNameStudent,MiddleNameStudent=@MiddleNameStudent,
-                        DateOfBirthStudent=@DateOfBirthStudent, NumberPhoneStudent=@NumberPhoneStudent 
-                        WHERE IdStudent=@IdStudent";
+SET IdUser=@IdUser, LastNameStudent=@LastNameStudent, 
+    FirstNameStudent=@FirstNameStudent, MiddleNameStudent=@MiddleNameStudent,
+    DateOfBirthStudent=@DateOfBirthStudent, NumberPhoneStudent=@NumberPhoneStudent,
+    Class=@Class
+WHERE IdStudent=@IdStudent";
                     int noOfRowsAffected;
                     using (var sqlCommand = new SqlCommand(sqlQuery,
                         sqlConnection))
@@ -212,6 +220,8 @@ namespace AcademicPerformance.Classes.DataSqlGateways
                                 studentModel.NumberPhoneStudent);
                             sqlCommand.Parameters.AddWithValue("IdStudent",
                                 studentModel.IdStudent);
+                            sqlCommand.Parameters.AddWithValue("Class", studentModel.ClassStudent ?? (object)DBNull.Value);
+
                         }
 
                         sqlConnection.Open();

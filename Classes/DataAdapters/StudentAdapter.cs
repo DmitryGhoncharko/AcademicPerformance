@@ -12,7 +12,10 @@ namespace AcademicPerformance.Classes.DataAdapters
         }
 
         public SqlDataAccess DataAccess { get; }
-
+        public List<StudentModel> GetAllStudents()
+        {
+            return GetAllUser();
+        }
 
         public bool AddStudent(StudentModel newStudent)
         {
