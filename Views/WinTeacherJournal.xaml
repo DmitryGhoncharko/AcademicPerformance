@@ -7,96 +7,100 @@
         Title="Окно преподователя" Height="800" Width="1600"
         WindowStartupLocation="CenterScreen"
         Style="{DynamicResource WindowsStyle}" Loaded="Window_Loaded">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="880"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Viewbox Stretch="Uniform" StretchDirection="Both">
+            <Grid Width="1600" Height="800">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="880"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <Menu Height="30" VerticalAlignment="Top" Grid.ColumnSpan="4">
-            <MenuItem x:Name="miFile" Header="Файл">
-                <MenuItem x:Name="miExit" Header="Выход" Click="miExit_Click"/>
-            </MenuItem>
-            <MenuItem x:Name="miProfile" Header="Личный профиль" Click="miProfile_Click"/>
-        </Menu>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <Label Content="Поиск" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10"/>
-        <TextBox x:Name="tbSearch" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
-                 Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10"/>
+                <Menu Height="30" VerticalAlignment="Top" Grid.ColumnSpan="4">
+                    <MenuItem x:Name="miFile" Header="Файл">
+                        <MenuItem x:Name="miExit" Header="Выход" Click="miExit_Click"/>
+                    </MenuItem>
+                    <MenuItem x:Name="miProfile" Header="Личный профиль" Click="miProfile_Click"/>
+                </Menu>
 
-        <!-- Обновлено: растянуто на две колонки -->
-        <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center">
-            <CheckBox x:Name="chkSortByClass" Content="Сортировать по классу"
-                      IsChecked="{Binding SortByClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      FontSize="14" Margin="10,0,0,0"/>
-            <TextBox x:Name="tbClassFilter" Width="120" Margin="10,0" VerticalAlignment="Center"
-                     ToolTip="Введите класс для отчета"/>
-            <Button Content="Отчет по классу" Click="ReportByClass_Click" Margin="5,0"/>
-            <Button Content="Диаграмма возраста" Click="ReportAgeChart_Click" Margin="5,0"/>
-        </StackPanel>
+                <Label Content="Поиск" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10"/>
+                <TextBox x:Name="tbSearch" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                         Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10"/>
 
-        <Grid Grid.Row="2" Grid.ColumnSpan="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="500"/>
-            </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <CheckBox x:Name="chkSortByClass" Content="Сортировать по классу"
+                              IsChecked="{Binding SortByClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              FontSize="14" Margin="10,0,0,0"/>
+                    <TextBox x:Name="tbClassFilter" Width="120" Margin="10,0" VerticalAlignment="Center"
+                             ToolTip="Введите класс для отчета"/>
+                    <Button Content="Отчет по классу" Click="ReportByClass_Click" Margin="5,0"/>
+                    <Button Content="Диаграмма возраста" Click="ReportAgeChart_Click" Margin="5,0"/>
+                </StackPanel>
 
-            <DataGrid x:Name="dgJournal"
-                      Grid.Column="0"
-                      AutoGenerateColumns="False"
-                      ItemsSource="{Binding Path=FilteredJournalList}"
-                      SelectedItem="{Binding Path=SelectedRow, Mode=TwoWay}"
-                      IsReadOnly="True" FontSize="12" Margin="10">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="№ п/п" Binding="{Binding IdJournal}" Width="50"/>
-                    <DataGridTextColumn Header="ФИО Студента" Binding="{Binding FIOStudent}" Width="*"/>
-                    <DataGridTextColumn Header="Класс" Binding="{Binding ClassStudent}" Width="100"/>
-                    <DataGridTextColumn Header="Оценка (название)" Binding="{Binding NameEvaluation}" Width="*"/>
-                    <DataGridTextColumn Header="Оценка" Binding="{Binding NumberEvaluation}" Width="50"/>
-                    <DataGridTextColumn Header="ФИО преподователя" Binding="{Binding FIOTeacher}" Width="*"/>
-                    <DataGridTextColumn Header="Название дисциплины" Binding="{Binding NameDiscipline}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <Grid Grid.Row="2" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="500"/>
+                    </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="1" Margin="10" VerticalAlignment="Stretch">
-                <Label Content="ФИО студента"/>
-                <TextBox Text="{Binding Path=SelectedRow.FIOStudent}" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
+                    <DataGrid x:Name="dgJournal"
+                              Grid.Column="0"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Path=FilteredJournalList}"
+                              SelectedItem="{Binding Path=SelectedRow, Mode=TwoWay}"
+                              IsReadOnly="True" FontSize="12" Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№ п/п" Binding="{Binding IdJournal}" Width="50"/>
+                            <DataGridTextColumn Header="ФИО Студента" Binding="{Binding FIOStudent}" Width="*"/>
+                            <DataGridTextColumn Header="Класс" Binding="{Binding ClassStudent}" Width="100"/>
+                            <DataGridTextColumn Header="Оценка (название)" Binding="{Binding NameEvaluation}" Width="*"/>
+                            <DataGridTextColumn Header="Оценка" Binding="{Binding NumberEvaluation}" Width="50"/>
+                            <DataGridTextColumn Header="ФИО преподователя" Binding="{Binding FIOTeacher}" Width="*"/>
+                            <DataGridTextColumn Header="Название дисциплины" Binding="{Binding NameDiscipline}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
-                <Label Content="Класс" Margin="0,10,0,0"/>
-                <TextBox Text="{Binding Path=SelectedRow.ClassStudent}" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
+                    <StackPanel Grid.Column="1" Margin="10" VerticalAlignment="Stretch">
+                        <Label Content="ФИО студента"/>
+                        <TextBox Text="{Binding Path=SelectedRow.FIOStudent}" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
 
-                <Label Content="Название оценки" Margin="0,10,0,0"/>
-                <TextBox Text="{Binding Path=SelectedRow.NameEvaluation}" FontSize="16" TextWrapping="Wrap"/>
+                        <Label Content="Класс" Margin="0,10,0,0"/>
+                        <TextBox Text="{Binding Path=SelectedRow.ClassStudent}" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
 
-                <Label Content="Оценка" Margin="0,10,0,0"/>
-                <ComboBox ItemsSource="{Binding EvaluationList}"
-                          DisplayMemberPath="NumberEvaluation"
-                          Text="{Binding SelectedRow.NumberEvaluation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding SelectedNumber, Mode=OneWayToSource}" FontSize="16"/>
+                        <Label Content="Название оценки" Margin="0,10,0,0"/>
+                        <TextBox Text="{Binding Path=SelectedRow.NameEvaluation}" FontSize="16" TextWrapping="Wrap"/>
 
-                <Label Content="ФИО преподователя" Margin="0,10,0,0"/>
-                <TextBox Text="{Binding Path=SelectedRow.FIOTeacher}" FontSize="16" TextWrapping="Wrap"/>
+                        <Label Content="Оценка" Margin="0,10,0,0"/>
+                        <ComboBox ItemsSource="{Binding EvaluationList}"
+                                  DisplayMemberPath="NumberEvaluation"
+                                  Text="{Binding SelectedRow.NumberEvaluation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedItem="{Binding SelectedNumber, Mode=OneWayToSource}" FontSize="16"/>
 
-                <Label Content="Дисциплина" Margin="0,10,0,0"/>
-                <ComboBox ItemsSource="{Binding DisciplineList}" DisplayMemberPath="NameDiscipline"
-                          Text="{Binding Path=SelectedRow.NameDiscipline}"
-                          SelectedItem="{Binding SelectedDiscipline, Mode=OneWayToSource}" FontSize="16"/>
+                        <Label Content="ФИО преподователя" Margin="0,10,0,0"/>
+                        <TextBox Text="{Binding Path=SelectedRow.FIOTeacher}" FontSize="16" TextWrapping="Wrap"/>
 
-                <WrapPanel Margin="0,20,0,0" HorizontalAlignment="Center">
-                    <Button Content="Сохранить" Command="{Binding SaveCommand}" Margin="5"/>
-                    <Button Content="Удалить" Command="{Binding DeleteCommand}" Margin="5"/>
-                    <Button Content="Создать" Click="Add_OnClick" Margin="5"/>
-                    <Button Content="Выход" Click="Exit_Click" Margin="5"/>
-                </WrapPanel>
-            </StackPanel>
-        </Grid>
-    </Grid>
+                        <Label Content="Дисциплина" Margin="0,10,0,0"/>
+                        <ComboBox ItemsSource="{Binding DisciplineList}" DisplayMemberPath="NameDiscipline"
+                                  Text="{Binding Path=SelectedRow.NameDiscipline}"
+                                  SelectedItem="{Binding SelectedDiscipline, Mode=OneWayToSource}" FontSize="16"/>
+
+                        <WrapPanel Margin="0,20,0,0" HorizontalAlignment="Center">
+                            <Button Content="Сохранить" Command="{Binding SaveCommand}" Margin="5"/>
+                            <Button Content="Удалить" Command="{Binding DeleteCommand}" Margin="5"/>
+                            <Button Content="Создать" Click="Add_OnClick" Margin="5"/>
+                            <Button Content="Выход" Click="Exit_Click" Margin="5"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Viewbox>
+    </ScrollViewer>
 </Window>
